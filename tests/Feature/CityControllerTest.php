@@ -9,8 +9,6 @@ use Illuminate\Testing\Fluent\AssertableJson;
 
 class CityControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -30,14 +28,15 @@ class CityControllerTest extends TestCase
         // Act
         $response = $this->get('api/cidades');
 
-        dd($response);
-
         // Assert
         $response->assertStatus(200)
-            ->assertJson(
-                fn (AssertableJson $json) =>
-                $json->hasAny('id', 'nome', 'estado')
-                    ->etc()
-            );
+            ->assertJsonStructure([[
+                    'id',
+                    'nome',
+                    'estado',
+                    'created_at',
+                    'updated_at',
+                    'deleted_at',
+            ]]);
     }
 }

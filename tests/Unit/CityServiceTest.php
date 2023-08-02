@@ -5,8 +5,8 @@ namespace Tests\Unit;
 use App\Models\City;
 use App\Services\CityService;
 use App\Repositories\Interfaces\CityRepositoryInterface;
-// use PHPUnit\Framework\TestCase;
 use Tests\TestCase;
+use Exception;
 
 class CityServiceTest extends TestCase
 {
@@ -18,51 +18,51 @@ class CityServiceTest extends TestCase
         $this->cityRepositoryMock = $this->mock(CityRepositoryInterface::class);
     }
 
-    // public function testShouldListAllCities(): void
-    // {
-    //     // Arrange
-    //     $fakeCities = City::factory()->times(10)->make();
-    //     $this->cityRepositoryMock
-    //         ->shouldReceive('getAll')
-    //         ->andReturn($fakeCities);
-    //     $cityService = new CityService($this->cityRepositoryMock);
+    public function testShouldListAllCities(): void
+    {
+        // Arrange
+        $fakeCities = City::factory()->times(10)->make();
+        $this->cityRepositoryMock
+            ->shouldReceive('getAll')
+            ->andReturn($fakeCities);
+        $cityService = new CityService($this->cityRepositoryMock);
 
-    //     // Act
-    //     $result = $cityService->getAll();
+        // Act
+        $result = $cityService->getAll();
 
-    //     // Assert
-    //     $this->assertEquals($fakeCities, $result);
-    // }
+        // Assert
+        $this->assertEquals($fakeCities, $result);
+    }
 
-    // public function testShouldReturnEmptyWhenNoCitiesStored(): void
-    // {
-    //     // Arrange
-    //     $fakeCities = [];
-    //     $this->cityRepositoryMock
-    //         ->shouldReceive('getAll')
-    //         ->andReturn($fakeCities);
-    //     $cityService = new CityService($this->cityRepositoryMock);
+    public function testShouldReturnEmptyWhenNoCitiesStored(): void
+    {
+        // Arrange
+        $fakeCities = [];
+        $this->cityRepositoryMock
+            ->shouldReceive('getAll')
+            ->andReturn($fakeCities);
+        $cityService = new CityService($this->cityRepositoryMock);
 
-    //     // Act
-    //     $result = $cityService->getAll();
+        // Act
+        $result = $cityService->getAll();
 
-    //     // Assert
-    //     $this->assertEquals($fakeCities, $result);
-    // }
+        // Assert
+        $this->assertEquals($fakeCities, $result);
+    }
 
-    // public function testShouldThrowErrorMessageWhenErrorOccurs(): void
-    // {
-    //     // Assert
-    //     $this->expectException(InvalidArgumentException::class);
+    public function testShouldThrowErrorMessageWhenErrorOccurs(): void
+    {
+        // Arrange
+        $this->cityRepositoryMock
+            ->shouldReceive('getAll')
+            ->andThrow(new Exception('Expected Exception was thrown'));
 
-    //     // Arrange
-    //     $fakeCities = City::factory()->times(10)->make();
-    //     $this->cityRepositoryMock
-    //         ->shouldReceive('getAll')
-    //         ->throw
-    //     $cityService = new CityService($this->cityRepositoryMock);
+        $cityService = new CityService($this->cityRepositoryMock);
 
-    //     // Act
-    //     $result = $cityService->getAll();
-    // }
+        // Act
+        $result = $cityService->getAll();
+
+        // Assert
+        $this->assertFalse($result);
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Repositories\Interfaces\CityRepositoryInterface;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class CityService
 {
@@ -17,8 +19,10 @@ class CityService
             $result = $this->cityRepository->getAll();
 
             return $result;
-        } catch (\Throwable $th) {
-            // return $th;
+        } catch (Exception $e) {
+            Log::error('Error ao listar todas as cidades: ' . $e->getMessage(), ['feature' => 'cidades']);
+
+            return false;
         }
     }
 }
