@@ -12,3 +12,10 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@me');
 });
+
+Route::group([
+    'namespace' => 'App\Http\Controllers',
+    'prefix' => 'cidades'
+], function ($router) {
+    Route::get('/', 'CityController@index');
+});
