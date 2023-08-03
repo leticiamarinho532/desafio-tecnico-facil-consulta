@@ -25,12 +25,8 @@ class DoctorPatient extends Model
     /**
      * Retorna o paciente relacionado.
      */
-    public function patient(): array
+    public function patient(): BelongsTo
     {
-        return [
-            'nome' => 'teste',
-            'cpf' => '000.000.000-00',
-            'celular' => '(00)00000-0000'
-        ];
+        return $this->belongsTo(Patient::class, 'paciente_id');
     }
 }

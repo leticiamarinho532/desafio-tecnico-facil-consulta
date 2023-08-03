@@ -16,7 +16,7 @@ class DoctorPatientRepository implements DoctorPatientRepositoryInterface
 
         $result = [
             'medico' => $getOrCreateLink->doctor,
-            'paciente' => []
+            'paciente' => $getOrCreateLink->patient
         ];
 
         return $result ;
