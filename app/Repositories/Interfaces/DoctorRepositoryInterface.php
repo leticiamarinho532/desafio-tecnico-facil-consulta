@@ -18,9 +18,4 @@ interface DoctorRepositoryInterface
      *
      */
     public function createDoctor(array|object $doctorInfos): mixed;
-
-    /**
-     *
-     */
-    public function linkPatientToDoctor(int $doctorId, int $patientId): mixed;
 }

@@ -19,13 +19,13 @@ class DoctorPatient extends Model
      */
     public function doctor(): BelongsTo
     {
-        return $this->belongsTo(Doctor::class);
+        return $this->belongsTo(Doctor::class, 'medico_id');
     }
 
     /**
      * Retorna o paciente relacionado.
      */
-    public function patient(): BelongsTo
+    public function patient(): array
     {
         return [
             'nome' => 'teste',
