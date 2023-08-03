@@ -11,14 +11,14 @@ Route::group(['middleware' => 'api', 'namespace' => 'App\Http\Controllers', 'pre
 });
 
 // Rotas que necessitam de autenticação
-Route::middleware(['api'])->group(['namespace' => 'App\Http\Controllers'], function ($router) {
-    Route::group(['prefix' => 'medicos'], function ($router) {
+Route::middleware('VerifyJwtMiddleware')->group(function ($router) {
+    Route::group(['prefix' => 'medicos', 'namespace' => 'App\Http\Controllers'], function ($router) {
         Route::post('/', 'DoctorController@store');
         Route::post('/{id_medico}/pacientes', 'DoctorController@createDoctorPatientLink');
         Route::get('/{id_medico}/pacientes', 'PatientController@show');
     });
 
-    Route::group(['prefix' => 'pacientes'], function ($router) {
+    Route::group(['prefix' => 'pacientes', 'namespace' => 'App\Http\Controllers'], function ($router) {
         Route::post('/', 'PatientController@store');
         // TODO: change to update method
         Route::post('/{id_paciente}', 'PatientController@update');
