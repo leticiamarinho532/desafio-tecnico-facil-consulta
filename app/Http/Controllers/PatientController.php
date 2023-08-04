@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Repositories\PatientRepository;
 use App\Services\PatientService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class PatientController extends Controller
 {
@@ -31,6 +33,26 @@ class PatientController extends Controller
 
     public function store(Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nome' => 'required|string|max:100',
+                'cpf' => 'required|string|max:20',
+                'celular' => 'required|string|max:20',
+            ],
+            [
+                'required' => ':attribute deve ser declarado no body',
+                'string' => ':attribute deve ser tipo :type',
+
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->messages()
+            ], 422);
+        }
+
         $input = $request->all();
 
         $patient = new PatientService($this->patientRepository);
@@ -48,6 +70,25 @@ class PatientController extends Controller
 
     public function update(int $patientId, Request $request)
     {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'nome' => 'required|string|max:100',
+                'celular' => 'required|string|max:20',
+            ],
+            [
+                'required' => ':attribute deve ser declarado no body',
+                'string' => ':attribute deve ser tipo :type',
+
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->messages()
+            ], 422);
+        }
+
         $input = $request->all();
 
         $patient = new PatientService($this->patientRepository);
