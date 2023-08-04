@@ -26,6 +26,6 @@ class CityController extends Controller
             ], $result['code']);
         }
 
-        return response()->json($result, 201);
+        return response()->json($result, 200);
     }
 }

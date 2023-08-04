@@ -14,18 +14,38 @@ class DoctorServiceTest extends TestCase
 {
     private $doctorRepositoryMock;
     private $doctorPatientRepositoryMock;
+    private $fakeDoctors = [];
+    private $fakePatient = [];
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->doctorRepositoryMock = $this->mock(DoctorRepositoryInterface::class);
         $this->doctorPatientRepositoryMock = $this->mock(DoctorPatientRepositoryInterface::class);
+
+        for ($i = 1; $i < 6; $i++) {
+            array_push($this->fakeDoctors, [
+                'nome' => Str::random(10),
+                'especialidade' => Str::random(10),
+                'cidade_id' => $i,
+                'created_at' => now()
+            ]);
+        }
+
+        for ($i = 1; $i < 6; $i++) {
+            array_push($this->fakePatient, [
+                'nome' => Str::random(10),
+                'cpf' => Str::random(10),
+                'celular' => Str::random(10),
+                'created_at' => now()
+            ]);
+        }
     }
 
     public function testShouldListAllDoctors()
     {
         // Arrange
-        $fakeDoctors = Doctor::factory()->times(10)->make();
+        $fakeDoctors = $this->fakeDoctors;
         $this->doctorRepositoryMock
             ->shouldReceive('getAll')
             ->andReturn($fakeDoctors);
@@ -41,7 +61,7 @@ class DoctorServiceTest extends TestCase
     public function testShouldListAllDoctorsFromOneCity()
     {
         // Arrange
-        $fakeDoctors = Doctor::factory()->times(10)->make();
+        $fakeDoctors = $this->fakeDoctors;
         $this->doctorRepositoryMock
             ->shouldReceive('getAllByCity')
             ->andReturn($fakeDoctors);
@@ -58,16 +78,12 @@ class DoctorServiceTest extends TestCase
     public function testShouldStoreADoctor()
     {
         // Arrange
-        $fakeDoctor = Doctor::factory()->make();
+        $fakeDoctor = end($this->fakeDoctors);
         $this->doctorRepositoryMock
             ->shouldReceive('createDoctor')
             ->andReturn($fakeDoctor);
         $doctorService = new DoctorService($this->doctorRepositoryMock, $this->doctorPatientRepositoryMock);
-        $body = [
-            'nome' => Str::random(15),
-            'especialidade' => Str::random(10),
-            'cidade' => Str::random(5)
-        ];
+        $body = $fakeDoctor;
 
         // Act
         $result = $doctorService->storeDoctor($body);
@@ -79,12 +95,8 @@ class DoctorServiceTest extends TestCase
     public function testShouldLinkAnDoctorToAPatient()
     {
         // Arrange
-        $fakeDoctor = Doctor::factory()->make();
-        $fakePatient = [
-            'nome' => Str::random(10),
-            'cpf' => Str::random(10),
-            'celular' => Str::random(10)
-        ];
+        $fakeDoctor = end($this->fakeDoctors);
+        $fakePatient = end($this->fakePatient);
         $expectedResult = [
             $fakeDoctor,
             $fakePatient
@@ -99,7 +111,7 @@ class DoctorServiceTest extends TestCase
         ];
 
         // Act
-        $result = $doctorService->createDoctorPatientLink($params['medico_id'], $params['paciente_id']);
+        $result = $doctorService->createDoctorPatientLink($params);
 
         // Assert
         $this->assertEquals($expectedResult, $result);

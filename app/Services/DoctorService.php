@@ -17,7 +17,7 @@ class DoctorService
     ) {
     }
 
-    public function getAll(): bool|object
+    public function getAll(): array|object
     {
         try {
             $result = $this->doctorRepository->getAll();
@@ -30,7 +30,7 @@ class DoctorService
         }
     }
 
-    public function getAllByCity(int $cityId): bool|object
+    public function getAllByCity(int $cityId): array|object
     {
         try {
             $result = $this->doctorRepository->getAllByCity($cityId);
