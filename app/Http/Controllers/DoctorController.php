@@ -49,27 +49,6 @@ class DoctorController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'nome' => 'required|string|max:100',
-                'especialidade' => 'required|string|max:100',
-                'cidade_id' => 'required|integer',
-            ],
-            [
-                'required' => ':attribute deve ser declarado no body',
-                'integer' => ':attribute deve ser tipo :type',
-                'string' => ':attribute deve ser tipo :type',
-
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => $validator->messages()
-            ], 422);
-        }
-
         $input = $request->all();
 
         $doctor = new DoctorService($this->doctorRepository, $this->doctorPatientRepository);
@@ -87,28 +66,11 @@ class DoctorController extends Controller
 
     public function createDoctorPatientLink(Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'medico_id' => 'required|integer',
-                'paciente_id' => 'required|integer',
-            ],
-            [
-                'required' => ':attribute deve ser declarado no body',
-                'integer' => ':attribute deve ser tipo :type',
-
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => $validator->messages()
-            ], 422);
-        }
+        $input = $request->all();
 
         $doctor = new DoctorService($this->doctorRepository, $this->doctorPatientRepository);
 
-        $result = $doctor->createDoctorPatientLink($request->input('medico_id'), $request->input('paciente_id'));
+        $result = $doctor->createDoctorPatientLink($input);
 
         if (!$result) {
             return response()->json([

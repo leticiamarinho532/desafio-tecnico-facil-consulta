@@ -20,12 +20,12 @@ class CityController extends Controller
 
         $result = $cities->getAll();
 
-        if (!$result) {
+        if (is_array($result) && in_array('error', $result)) {
             return response()->json([
-                'message' => 'Não foi possivel exibir resultados.'
-            ], 406);
+                'message' => $result['message']
+            ], $result['code']);
         }
 
-        return response()->json($result, 200);
+        return response()->json($result, 201);
     }
 }

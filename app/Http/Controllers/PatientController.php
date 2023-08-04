@@ -33,72 +33,33 @@ class PatientController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'nome' => 'required|string|max:100',
-                'cpf' => 'required|string|max:20',
-                'celular' => 'required|string|max:20',
-            ],
-            [
-                'required' => ':attribute deve ser declarado no body',
-                'string' => ':attribute deve ser tipo :type',
-
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => $validator->messages()
-            ], 422);
-        }
-
         $input = $request->all();
 
         $patient = new PatientService($this->patientRepository);
 
         $result = $patient->createPatient($input);
 
-        if (!$result) {
+        if (is_array($result) && in_array('error', $result)) {
             return response()->json([
-                'message' => 'Não foi possivel salvar um paciente.'
-            ], 406);
+                'message' => $result['message']
+            ], $result['code']);
         }
 
-        return response()->json($result, 200);
+        return response()->json($result, 201);
     }
 
     public function update(int $patientId, Request $request)
     {
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'nome' => 'required|string|max:100',
-                'celular' => 'required|string|max:20',
-            ],
-            [
-                'required' => ':attribute deve ser declarado no body',
-                'string' => ':attribute deve ser tipo :type',
-
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                'message' => $validator->messages()
-            ], 422);
-        }
-
         $input = $request->all();
 
         $patient = new PatientService($this->patientRepository);
 
         $result = $patient->updatePatient($patientId, $input);
 
-        if (!$result) {
+        if (is_array($result) && in_array('error', $result)) {
             return response()->json([
-                'message' => 'Não foi possivel atualizar um paciente.'
-            ], 406);
+                'message' => $result['message']
+            ], $result['code']);
         }
 
         return response()->json($result, 200);
