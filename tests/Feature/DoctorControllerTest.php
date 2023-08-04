@@ -2,25 +2,42 @@
 
 namespace Tests\Feature;
 
-use Database\Seeders\DoctorPatientSeeder;
-use Database\Seeders\DoctorSeeder;
-use App\Models\Doctor;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Database\Seeders\{
+    CitySeeder,
+    DoctorPatientSeeder,
+    DoctorSeeder
+};
+// use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Tests\TestCase;
+use Illuminate\Support\Str;
 
 class DoctorControllerTest extends TestCase
 {
+    // use DatabaseTruncation;
+
+    private $fakeDoctors = [];
+
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->seed(
             [
+                CitySeeder::class,
                 DoctorSeeder::class,
                 DoctorPatientSeeder::class
             ]
         );
+
+        for ($i = 1; $i < 6; $i++) {
+            array_push($this->fakeDoctors, [
+                'nome' => Str::random(10),
+                'especialidade' => Str::random(10),
+                'cidade_id' => $i,
+                'created_at' => now()
+            ]);
+        }
+
     }
 
     public function testShouldReturnAllDoctors(): void
@@ -62,7 +79,7 @@ class DoctorControllerTest extends TestCase
     public function testShouldReturnCreatedDoctor(): void
     {
         // Arrange
-        $fakeDoctor = Doctor::factory()->make();
+        $fakeDoctor = end($this->fakeDoctors);
         $body = [
             $fakeDoctor
         ];
@@ -90,7 +107,7 @@ class DoctorControllerTest extends TestCase
         $patientId = rand(1, 5);
         $body = [
             'medico_id' => $doctorId,
-            'paciente_id' => $$patientId
+            'paciente_id' => $patientId
         ];
 
         // Act

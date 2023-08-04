@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use App\Models\Doctor;
 use App\Services\DoctorService;
 use App\Repositories\Interfaces\{
-    DoctorPatientRepositoryInterface, DoctorRepositoryInterface
+    DoctorPatientRepositoryInterface,
+    DoctorRepositoryInterface
 };
 use Illuminate\Support\Str;
 use Tests\TestCase;

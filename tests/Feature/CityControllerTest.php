@@ -4,11 +4,13 @@ namespace Tests\Feature;
 
 use Database\Seeders\CitySeeder;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Testing\Fluent\AssertableJson;
+
+// use Illuminate\Foundation\Testing\DatabaseTruncation;
 
 class CityControllerTest extends TestCase
 {
+    // use DatabaseTruncation;
+
     protected function setUp(): void
     {
         parent::setUp();
