@@ -22,7 +22,7 @@ class CityService
         } catch (Exception $e) {
             Log::error('Error ao listar todas as cidades: ' . $e->getMessage(), ['feature' => 'cidades']);
 
-            return false;
+            return ['error' => true, 'message' => 'Não foi possivel listar as cidades.', 'code' => 406];
         }
     }
 }

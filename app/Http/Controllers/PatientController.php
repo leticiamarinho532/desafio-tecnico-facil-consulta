@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Repositories\PatientRepository;
 use App\Services\PatientService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
 
 class PatientController extends Controller
 {
@@ -37,13 +39,13 @@ class PatientController extends Controller
 
         $result = $patient->createPatient($input);
 
-        if (!$result) {
+        if (is_array($result) && in_array('error', $result)) {
             return response()->json([
-                'message' => 'Não foi possivel salvar um paciente.'
-            ], 406);
+                'message' => $result['message']
+            ], $result['code']);
         }
 
-        return response()->json($result, 200);
+        return response()->json($result, 201);
     }
 
     public function update(int $patientId, Request $request)
@@ -54,10 +56,10 @@ class PatientController extends Controller
 
         $result = $patient->updatePatient($patientId, $input);
 
-        if (!$result) {
+        if (is_array($result) && in_array('error', $result)) {
             return response()->json([
-                'message' => 'Não foi possivel atualizar um paciente.'
-            ], 406);
+                'message' => $result['message']
+            ], $result['code']);
         }
 
         return response()->json($result, 200);
