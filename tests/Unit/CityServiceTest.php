@@ -7,21 +7,31 @@ use App\Services\CityService;
 use App\Repositories\Interfaces\CityRepositoryInterface;
 use Tests\TestCase;
 use Exception;
+use Illuminate\Support\Str;
 
 class CityServiceTest extends TestCase
 {
     private $cityRepositoryMock;
+    private $fakeCities = [];
 
     protected function setUp(): void
     {
         parent::setUp();
         $this->cityRepositoryMock = $this->mock(CityRepositoryInterface::class);
+
+        for ($i = 1; $i < 6; $i++) {
+            array_push($this->fakeCities, [
+                'nome' => Str::random(10),
+                'estado' => Str::random(10),
+                'created_at' => now()
+            ]);
+        }
     }
 
     public function testShouldListAllCities(): void
     {
         // Arrange
-        $fakeCities = City::factory()->times(10)->make();
+        $fakeCities = $this->fakeCities;
         $this->cityRepositoryMock
             ->shouldReceive('getAll')
             ->andReturn($fakeCities);
@@ -63,6 +73,6 @@ class CityServiceTest extends TestCase
         $result = $cityService->getAll();
 
         // Assert
-        $this->assertFalse($result);
+        $this->assertArrayHasKey('error', $result);
     }
 }
