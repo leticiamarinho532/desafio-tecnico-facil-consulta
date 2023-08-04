@@ -42,7 +42,8 @@ class PatientService
     public function updatePatient(int $patientId, array|object $patientInfos): bool|object
     {
         try {
-            $result = $this->patientRepository->updatePatient($patientId, $patientInfos);
+            $formattedPatientInfos = $this->removeCpfFromUpdateInfos($patientInfos);
+            $result = $this->patientRepository->updatePatient($patientId, $formattedPatientInfos);
 
             return $result;
         } catch (Exception $e) {
@@ -51,4 +52,16 @@ class PatientService
             return false;
         }
     }
+
+    private function removeCpfFromUpdateInfos(array|object $patientInfos): array|object
+    {
+        if ($patientInfos['cpf']) {
+            unset($patientInfos['cpf']);
+
+            return $patientInfos;
+        }
+
+        return $patientInfos;
+    }
+
 }
