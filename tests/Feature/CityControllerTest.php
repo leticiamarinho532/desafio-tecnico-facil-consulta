@@ -5,12 +5,8 @@ namespace Tests\Feature;
 use Database\Seeders\CitySeeder;
 use Tests\TestCase;
 
-// use Illuminate\Foundation\Testing\DatabaseTruncation;
-
 class CityControllerTest extends TestCase
 {
-    // use DatabaseTruncation;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -22,9 +18,6 @@ class CityControllerTest extends TestCase
         );
     }
 
-    /**
-     * A basic feature test example.
-     */
     public function testShouldReturnAllCities(): void
     {
         // Act

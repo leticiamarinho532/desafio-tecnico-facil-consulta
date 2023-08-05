@@ -11,12 +11,8 @@ use Tests\TestCase;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-// use Illuminate\Foundation\Testing\DatabaseTruncation;
-
 class PatientControllerTest extends TestCase
 {
-    // use DatabaseTruncation;
-
     private $fakePatients = [];
     private $user;
     private $userToken;
@@ -94,7 +90,7 @@ class PatientControllerTest extends TestCase
 
         // Act
         $response = $this->withHeader('Authorization', 'Bearer' . $this->userToken)
-            ->post('api/pacientes/1', $body);
+            ->put('api/pacientes/1', $body);
 
         // Assert
         $response->assertStatus(200)
