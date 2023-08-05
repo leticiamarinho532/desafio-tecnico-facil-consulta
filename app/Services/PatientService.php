@@ -37,13 +37,13 @@ class PatientService
 
             return $result;
         } catch (ValidationException $e) {
-            Log::error('Error ao salvar um paciente: ' . $e->getMessage(), ['feature' => 'paciente']);
+            Log::error('Error ao salvar os dados do paciente: ' . $e->getMessage(), ['feature' => 'paciente']);
 
             return ['error' => true, 'message' => $e->errors(), 'code' => 422];
         } catch (Exception $e) {
-            Log::error('Error ao salvar um paciente: ' . $e->getMessage(), ['feature' => 'paciente']);
+            Log::error('Error ao salvar os dados do paciente: ' . $e->getMessage(), ['feature' => 'paciente']);
 
-            return ['error' => true, 'message' => 'Não foi possivel salvar um paciente.', 'code' => 406];
+            return ['error' => true, 'message' => 'Não foi possivel salvar os dados do paciente.', 'code' => 406];
         }
     }
 
@@ -57,13 +57,13 @@ class PatientService
 
             return $result;
         } catch (ValidationException $e) {
-            Log::error('Error ao atualizar um paciente: ' . $e->getMessage(), ['feature' => 'paciente']);
+            Log::error('Error ao atualizar os dados do paciente: ' . $e->getMessage(), ['feature' => 'paciente']);
 
             return ['error' => true, 'message' => $e->errors(), 'code' => 422];
         } catch (Exception $e) {
-            Log::error('Error ao atualizar um paciente: ' . $e->getMessage(), ['feature' => 'paciente']);
+            Log::error('Error ao atualizar os dados do paciente: ' . $e->getMessage(), ['feature' => 'paciente']);
 
-            return ['error' => true, 'message' => 'Não foi possível atualizar um paciente.', 'code' => 406];
+            return ['error' => true, 'message' => 'Não foi possível atualizar os dados do paciente.', 'code' => 406];
         }
     }
 

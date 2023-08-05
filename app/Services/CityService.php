@@ -13,7 +13,7 @@ class CityService
     ) {
     }
 
-    public function getAll(): mixed
+    public function getAll(): array|object
     {
         try {
             $result = $this->cityRepository->getAll();

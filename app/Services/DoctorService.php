@@ -24,7 +24,7 @@ class DoctorService
 
             return $result;
         } catch (Exception $e) {
-            Log::error('Error ao listar todos os medicos: ' . $e->getMessage(), ['feature' => 'medico']);
+            Log::error('Error ao listar todos os médicos: ' . $e->getMessage(), ['feature' => 'medico']);
 
             return ['error' => true, 'message' => 'Não foi possivel listar os médicos.', 'code' => 406];
         }
@@ -37,7 +37,7 @@ class DoctorService
 
             return $result;
         } catch (Exception $e) {
-            Log::error('Error ao listar todos os medicos de uma cidade: ' . $e->getMessage(), ['feature' => 'medico']);
+            Log::error('Error ao listar todos os médicos de uma cidade: ' . $e->getMessage(), ['feature' => 'medico']);
 
             return ['error' => true, 'message' => 'Não foi possivel listar os médicos de uma cidade.', 'code' => 406];
         }
@@ -51,19 +51,18 @@ class DoctorService
             $result = $this->doctorRepository->createDoctor($doctorInfos);
 
             return $result;
-
         } catch (ValidationException $e) {
-            Log::error('Error ao salvar um medico: ' . $e->getMessage(), ['feature' => 'medico']);
+            Log::error('Error ao salvar os dados de um médico: ' . $e->getMessage(), ['feature' => 'medico']);
 
             return ['error' => true, 'message' => $e->errors(), 'code' => 422];
         } catch (Exception $e) {
-            Log::error('Error ao salvar um medico: ' . $e->getMessage(), ['feature' => 'medico']);
+            Log::error('Error ao salvar os dados de um médico: ' . $e->getMessage(), ['feature' => 'medico']);
 
-            return ['error' => true, 'message' => 'Não foi possivel salvar um médico.', 'code' => 406];
+            return ['error' => true, 'message' => 'Não foi possivel salvar os dados de um médico.', 'code' => 406];
         }
     }
 
-    public function createDoctorPatientLink(array| object $linkInfos): array|object
+    public function createDoctorPatientLink(array|object $linkInfos): array|object
     {
         try {
             $this->validateCreateLinkDoctorPatientLinkParams($linkInfos);
@@ -78,7 +77,7 @@ class DoctorService
         } catch (Exception $e) {
             Log::error('Error ao vincular um paciente ao médico: ' . $e->getMessage(), ['feature' => 'medico']);
 
-            return ['error' => true, 'message' => 'Error ao vincular um paciente ao médico.', 'code' => 406];
+            return ['error' => true, 'message' => 'Não foi possivel vincular um paciente ao médico.', 'code' => 406];
         }
     }
 
@@ -116,7 +115,6 @@ class DoctorService
             [
                 'required' => ':attribute deve ser declarado no body',
                 'integer' => ':attribute deve ser tipo :type',
-
             ]
         );
 

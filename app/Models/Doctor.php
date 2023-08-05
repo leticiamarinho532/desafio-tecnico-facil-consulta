@@ -16,9 +16,6 @@ class Doctor extends Model
 
     protected $fillable = ['nome', 'especialidade', 'cidade_id'];
 
-    /**
-     * Get the comments for the blog post.
-     */
     public function patient(): HasMany
     {
         return $this->hasMany(DoctorPatient::class);

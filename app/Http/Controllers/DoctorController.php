@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\DoctorPatientRepository;
 use App\Repositories\DoctorRepository;
 use App\Services\DoctorService;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
@@ -17,7 +17,7 @@ class DoctorController extends Controller
     {
     }
 
-    public function index() 
+    public function index(): JsonResponse
     {
         $doctor = new DoctorService($this->doctorRepository, $this->doctorPatientRepository);
 
@@ -32,7 +32,7 @@ class DoctorController extends Controller
         return response()->json($result, 200);
     }
 
-    public function show(int $cityId)
+    public function show(int $cityId): JsonResponse
     {
         $doctor = new DoctorService($this->doctorRepository, $this->doctorPatientRepository);
 
@@ -47,7 +47,7 @@ class DoctorController extends Controller
         return response()->json($result, 200);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $input = $request->all();
 
@@ -64,7 +64,7 @@ class DoctorController extends Controller
         return response()->json($result, 201);
     }
 
-    public function createDoctorPatientLink(Request $request)
+    public function createDoctorPatientLink(Request $request): JsonResponse
     {
         $input = $request->all();
 

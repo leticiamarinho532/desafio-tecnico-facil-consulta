@@ -3,8 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\Patient;
-use App\Models\Doctor;
-use App\Models\DoctorPatient;
 
 use App\Repositories\Interfaces\PatientRepositoryInterface;
 
