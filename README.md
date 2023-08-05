@@ -66,8 +66,8 @@ Código que foi feito/alterado por mim está localizado nas seguintes pastas:
 #### Rodando
 
 - Rode esse comando `./vendor/bin/sail up` (no terminal) na pasta raiz (onde o arquivo docker-compose.yaml está).
-- Use seu Ip local para usar as rotas do back-end que estão na documentação ta api
-- Já tem migrations e seeders prontas para uso! para utliza-las é necessário rodar o comando `./vendor/bin/sail artisan migrate` e depois `./vendor/bin/sail artisan db:seed`.
+- Use seu Ip local para usar as rotas do back-end que estão na documentação da api.
+- Já tem migrations e seeders prontas para uso! para utiliza-las é necessário rodar o comando `./vendor/bin/sail artisan migrate` e depois `./vendor/bin/sail artisan db:seed`.
 
 ## **5. Testes**
 - Unidade / Integração
