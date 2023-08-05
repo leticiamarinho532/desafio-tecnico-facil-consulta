@@ -16,7 +16,9 @@
     - Como Está sendo usado o banco de dados
 
 ## **1. Documentação da API**
-Em breve.
+Foi utilizado a collection disponibilizada no desafio técnico e adicionado algumas informações>
+
+https://documenter.getpostman.com/view/8202053/2s9XxyRDLS
 
 ## **2. Tecnologias**
 1. PHP 8.1
