@@ -1,66 +1,81 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Desafio Técnico
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## uma API para listar, adicionar e atualizar as cidades, médicos e pacientes cadastrados no banco de dados.
 
-## About Laravel
+### Sumário
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. Documentação da API
+2. Tecnologias
+3. BoilerPlate
+4. Como usar na sua máquina
+    - Clonando
+    - Definindo Variáveis de Ambiente
+    - Rodando
+5. Testes
+    - Unidade / Integração
+    - Como Está sendo usado o banco de dados
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## **1. Documentação da API**
+Em breve.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## **2. Tecnologias**
+1. PHP 8.1
+2. Laravel 10.10
+3. JWT (tymon/jwt-auth) 2.0
+4. MYSql 8.0
+6. PHPUnit 10.1
 
-## Learning Laravel
+## **3. Boilerplate**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Com o uso do laravel, existe pastas e arquivos que são default.
+Código que foi feito/alterado por mim está localizado nas seguintes pastas:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```
+.
+├── app                    
+│   |
+│   ├── Http                                    # Here
+│   ├── Models                                  # Here
+│   ├── Repositories                            # Here
+│   └── Services                                # Here
+│   └── ... 
+├── config
+├── ...
+├── database                                    # Here
+|
+├── ...               
+├── ...
+├── routes                                      # Here
+├── ...
+├── tests                                       # Here
+└── .env                                        # Here
+└── .env.testing                                # Here
+└── .gitignore                                # Here
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## **4. Como usar na sua máquina**
 
-## Laravel Sponsors
+#### Clonando
+- Instale o Docker no seu local [site Docker](https://docs.docker.com/desktop/).
+- Clone  esse repositório.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+#### Definindo Variáveis de Ambiente
+- Copie a .env.example para o arquivo .env
+#### Rodando
 
-### Premium Partners
+- Rode esse comando `./vendor/bin/sail up` (no terminal) na pasta raiz (onde o arquivo docker-compose.yaml está).
+- Use seu Ip local para usar as rotas do back-end que estão na documentação ta api
+- Já tem migrations e seeders prontas para uso! para utliza-las é necessário rodar o comando `./vendor/bin/sail artisan migrate` e depois `./vendor/bin/sail artisan db:seed`.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## **5. Testes**
+- Unidade / Integração
 
-## Contributing
+    Os testes de unidade foram aplicados para assegurar comportamento correto nos menores pedaços de código, que nesse projeto se encontram nos `Services`.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    Os testes de integração foram aplicados para assegurar que a junção de tecnologias, que no caso foi a junção com banco de dados, funcione corretamente.
 
-## Code of Conduct
+    Para executar os testes, roda o comando `./vendor/bin/sail test`.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Como Está sendo usado o banco de dados
 
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    Para os testes não poluirem o banco principal, foi utilizado um outro database na mesma conexão o principal (laravel sail cria automaticamente esse database). Foi utilizado um arquivo `.env` de testes, com nome de `env.testing` e para os testes funcinarem corretamente, é necessário rodar as migrations no banco de teste com o comando `./vendor/bin/sail artisan migrate --env=testing`.
