@@ -23,7 +23,7 @@ class VerifyJwtMiddleware
                 return response()->json(['message' => 'user not found'], 500);
             }
         } catch (JWTException $e) {
-            return response()->json(['message' => 'Unauthorized'], 500);
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
         return $next($request);
     }

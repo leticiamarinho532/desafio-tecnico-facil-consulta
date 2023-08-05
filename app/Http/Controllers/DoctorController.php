@@ -23,10 +23,10 @@ class DoctorController extends Controller
 
         $result = $doctor->getAll();
 
-        if (!$result) {
+        if (is_array($result) && in_array('error', $result)) {
             return response()->json([
-                'message' => 'Não foi possivel exibir resultados.'
-            ], 406);
+                'message' => $result['message']
+            ], $result['code']);
         }
 
         return response()->json($result, 200);
@@ -38,10 +38,10 @@ class DoctorController extends Controller
 
         $result = $doctor->getAllByCity($cityId);
 
-        if (!$result) {
+        if (is_array($result) && in_array('error', $result)) {
             return response()->json([
-                'message' => 'Não foi possivel exibir resultados.'
-            ], 406);
+                'message' => $result['message']
+            ], $result['code']);
         }
 
         return response()->json($result, 200);
@@ -55,13 +55,13 @@ class DoctorController extends Controller
 
         $result = $doctor->storeDoctor($input);
 
-        if (!$result) {
+        if (is_array($result) && in_array('error', $result)) {
             return response()->json([
-                'message' => 'Não foi possivel salvar um médico.'
-            ], 406);
+                'message' => $result['message']
+            ], $result['code']);
         }
 
-        return response()->json($result, 200);
+        return response()->json($result, 201);
     }
 
     public function createDoctorPatientLink(Request $request)
@@ -72,10 +72,10 @@ class DoctorController extends Controller
 
         $result = $doctor->createDoctorPatientLink($input);
 
-        if (!$result) {
+        if (is_array($result) && in_array('error', $result)) {
             return response()->json([
-                'message' => 'Não foi vincular um paciente a um médico.'
-            ], 406);
+                'message' => $result['message']
+            ], $result['code']);
         }
 
         return response()->json($result, 200);

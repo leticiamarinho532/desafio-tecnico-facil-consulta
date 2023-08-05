@@ -6,8 +6,10 @@ use Database\Seeders\{
     PatientSeeder,
     DoctorPatientSeeder
 };
+use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Support\Str;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 // use Illuminate\Foundation\Testing\DatabaseTruncation;
 
@@ -16,6 +18,8 @@ class PatientControllerTest extends TestCase
     // use DatabaseTruncation;
 
     private $fakePatients = [];
+    private $user;
+    private $userToken;
 
     protected function setUp(): void
     {
@@ -36,12 +40,16 @@ class PatientControllerTest extends TestCase
                 'created_at' => now()
             ]);
         }
+
+        $this->user = User::factory()->create();
+        $this->userToken = JWTAuth::fromUser($this->user);
     }
 
-    public function shouldShowPatientsFromOneDoctor(): void
+    public function testShouldShowPatientsFromOneDoctor(): void
     {
         // Act
-        $response = $this->get('api/medicos/1/pacientes');
+        $response = $this->withHeader('Authorization', 'Bearer' . $this->userToken)
+            ->get('api/medicos/1/pacientes');
 
         // Assert
         $response->assertStatus(200)
@@ -52,7 +60,7 @@ class PatientControllerTest extends TestCase
                     'celular',
                     'created_at',
                     'updated_at',
-                    'deleted_at',
+                    'deleted_at'
             ]]);
     }
 
@@ -60,15 +68,14 @@ class PatientControllerTest extends TestCase
     {
         // Arrange
         $fakePatient = end($this->fakePatients);
-        $body = [
-            $fakePatient
-        ];
+        $body = $fakePatient;
 
         // Act
-        $response = $this->post('api/pacientes', $body);
+        $response = $this->withHeader('Authorization', 'Bearer' . $this->userToken)
+            ->post('api/pacientes', $body);
 
         // Assert
-        $response->assertStatus(200)
+        $response->assertStatus(201)
             ->assertJsonStructure([
                 'id',
                 'nome',
@@ -76,7 +83,6 @@ class PatientControllerTest extends TestCase
                 'celular',
                 'created_at',
                 'updated_at',
-                'deleted_at',
         ]);
     }
 
@@ -84,12 +90,11 @@ class PatientControllerTest extends TestCase
     {
         // Arrange
         $fakePatient = end($this->fakePatients);
-        $body = [
-            $fakePatient
-        ];
+        $body = $fakePatient;
 
         // Act
-        $response = $this->post('api/pacientes/1', $body);
+        $response = $this->withHeader('Authorization', 'Bearer' . $this->userToken)
+            ->post('api/pacientes/1', $body);
 
         // Assert
         $response->assertStatus(200)
@@ -100,7 +105,7 @@ class PatientControllerTest extends TestCase
                 'celular',
                 'created_at',
                 'updated_at',
-                'deleted_at',
+                'deleted_at'
         ]);
     }
 }

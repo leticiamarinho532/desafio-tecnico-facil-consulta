@@ -6,6 +6,8 @@ use App\Repositories\Interfaces\PatientRepositoryInterface;
 use App\Services\PatientService;
 use Illuminate\Support\Str;
 use Tests\TestCase;
+use Exception;
+use Illuminate\Support\Arr;
 
 class PatientServiceTest extends TestCase
 {
@@ -55,6 +57,22 @@ class PatientServiceTest extends TestCase
         $this->assertEquals($fakePatients, $result);
     }
 
+    public function testShouldThrowErrorWhenModelReturnsErrorOnListAllDoctorsPatient(): void
+    {
+        // Arrange
+        $this->patientRepositoryMock
+            ->shouldReceive('getAllDoctorPatients')
+            ->andThrow(new Exception('Expected Exception was thrown'));
+        $patientService = new PatientService($this->patientRepositoryMock);
+        $doctorId = rand(1, 5);
+
+        // Act
+        $result = $patientService->getAllDoctorPatients($doctorId);
+
+        // Assert
+        $this->assertArrayHasKey('error', $result);
+    }
+
     public function testShouldCreateAPatient(): void
     {
         // Arrange
@@ -70,6 +88,40 @@ class PatientServiceTest extends TestCase
 
         // Assert
         $this->assertEquals($fakePatient, $result);
+    }
+
+    public function testShouldThrowValidationErrorWhenParamsInvalidOnCreateAPatient(): void
+    {
+        // Arrange
+        $fakePatient = [];
+        $this->patientRepositoryMock
+            ->shouldReceive('createDoctor')
+            ->andReturn($fakePatient);
+        $patientService = new PatientService($this->patientRepositoryMock);
+        $body = $fakePatient;
+
+        // Act
+        $result = $patientService->createPatient($body);
+
+        // Assert
+        $this->assertArrayHasKey('error', $result);
+    }
+
+    public function testShouldThrowErrorWhenModelReturnsErrorOnCreateAPatient(): void
+    {
+        // Arrange
+        $fakePatient = end($this->fakePatients);
+        $this->patientRepositoryMock
+            ->shouldReceive('createPatient')
+            ->andThrow(new Exception('Expected Exception was thrown'));
+        $patientService = new PatientService($this->patientRepositoryMock);
+        $body = $fakePatient;
+
+        // Act
+        $result = $patientService->createPatient($body);
+
+        // Assert
+        $this->assertArrayHasKey('error', $result);
     }
 
     public function testShouldUpdateAPatient(): void
@@ -88,5 +140,41 @@ class PatientServiceTest extends TestCase
 
         // Assert
         $this->assertEquals($fakePatient, $result);
+    }
+
+    public function testShouldThrowValidationErrorWhenParamsInvalidOnUpdateAPatient(): void
+    {
+        // Arrange
+        $fakePatient = [];
+        $this->patientRepositoryMock
+            ->shouldReceive('updatePatient')
+            ->andReturn($fakePatient);
+        $patientService = new PatientService($this->patientRepositoryMock);
+        $body = $fakePatient;
+        $patientId = rand(1, 5);
+
+        // Act
+        $result = $patientService->updatePatient($patientId, $body);
+
+        // Assert
+        $this->assertArrayHasKey('error', $result);
+    }
+
+    public function testShouldThrowErrorWhenModelReturnsErrorOnUpdateAPatient(): void
+    {
+        // Arrange
+        $fakePatient = end($this->fakePatients);
+        $this->patientRepositoryMock
+            ->shouldReceive('updatePatient')
+            ->andThrow(new Exception('Expected Exception was thrown'));
+        $patientService = new PatientService($this->patientRepositoryMock);
+        $body = $fakePatient;
+        $patientId = rand(1, 5);
+
+        // Act
+        $result = $patientService->updatePatient($patientId, $body);
+
+        // Assert
+        $this->assertArrayHasKey('error', $result);
     }
 }
