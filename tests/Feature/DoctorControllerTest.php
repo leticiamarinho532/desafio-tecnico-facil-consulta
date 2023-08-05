@@ -8,15 +8,12 @@ use Database\Seeders\{
     DoctorSeeder
 };
 use App\Models\User;
-// use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class DoctorControllerTest extends TestCase
 {
-    // use DatabaseTruncation;
-
     private $fakeDoctors = [];
     private $user;
     private $userToken;
