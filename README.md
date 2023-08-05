@@ -66,6 +66,7 @@ Código que foi feito/alterado por mim está localizado nas seguintes pastas:
 #### Rodando
 
 - Rode esse comando `./vendor/bin/sail up` (no terminal) na pasta raiz (onde o arquivo docker-compose.yaml está).
+- Rode esse comando `./vendor/bin/sail artisan jwt:secret` (no terminal) na pasta raiz para gerar a secret key do JWT.
 - Use seu Ip local para usar as rotas do back-end que estão na documentação da api.
 - Já tem migrations e seeders prontas para uso! para utiliza-las é necessário rodar o comando `./vendor/bin/sail artisan migrate` e depois `./vendor/bin/sail artisan db:seed`.
 
