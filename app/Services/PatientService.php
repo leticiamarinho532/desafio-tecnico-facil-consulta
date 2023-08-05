@@ -69,7 +69,7 @@ class PatientService
 
     private function removeCpfFromUpdateInfos(array|object $patientInfos): array|object
     {
-        if ($patientInfos['cpf']) {
+        if (isset($patientInfos['cpf'])) {
             unset($patientInfos['cpf']);
 
             return $patientInfos;
