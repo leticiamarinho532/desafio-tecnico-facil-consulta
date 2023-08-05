@@ -1,6 +1,6 @@
 # Desafio Técnico
 
-## uma API para listar, adicionar e atualizar as cidades, médicos e pacientes cadastrados no banco de dados.
+## Uma API para listar, adicionar e atualizar as cidades, médicos e pacientes cadastrados no banco de dados.
 
 ### Sumário
 
