@@ -14,17 +14,11 @@ class DoctorPatient extends Model
 
     protected $fillable = ['medico_id', 'paciente_id'];
 
-    /**
-     * Retorna o médico relacionado.
-     */
     public function doctor(): BelongsTo
     {
         return $this->belongsTo(Doctor::class, 'medico_id');
     }
 
-    /**
-     * Retorna o paciente relacionado.
-     */
     public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class, 'paciente_id');

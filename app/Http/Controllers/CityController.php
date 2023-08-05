@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\CityRepository;
 use App\Services\CityService;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class CityController extends Controller
 {
@@ -14,7 +14,7 @@ class CityController extends Controller
     {
     }
 
-    public function index(): object
+    public function index(): JsonResponse
     {
         $cities = new CityService($this->cityRepository);
 
