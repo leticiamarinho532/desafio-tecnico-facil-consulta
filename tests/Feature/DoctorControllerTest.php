@@ -2,25 +2,48 @@
 
 namespace Tests\Feature;
 
-use Database\Seeders\DoctorPatientSeeder;
-use Database\Seeders\DoctorSeeder;
-use App\Models\Doctor;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Database\Seeders\{
+    CitySeeder,
+    DoctorPatientSeeder,
+    DoctorSeeder
+};
+use App\Models\User;
+// use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Tests\TestCase;
+use Illuminate\Support\Str;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class DoctorControllerTest extends TestCase
 {
+    // use DatabaseTruncation;
+
+    private $fakeDoctors = [];
+    private $user;
+    private $userToken;
+
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->seed(
             [
+                CitySeeder::class,
                 DoctorSeeder::class,
                 DoctorPatientSeeder::class
             ]
         );
+
+        for ($i = 1; $i < 6; $i++) {
+            array_push($this->fakeDoctors, [
+                'nome' => Str::random(10),
+                'especialidade' => Str::random(10),
+                'cidade_id' => $i,
+                'created_at' => now()
+            ]);
+        }
+
+        $this->user = User::factory()->create();
+        $this->userToken = JWTAuth::fromUser($this->user);
     }
 
     public function testShouldReturnAllDoctors(): void
@@ -37,7 +60,7 @@ class DoctorControllerTest extends TestCase
                     'cidade_id',
                     'created_at',
                     'updated_at',
-                    'deleted_at',
+                    'deleted_at'
             ]]);
     }
 
@@ -55,32 +78,30 @@ class DoctorControllerTest extends TestCase
                     'cidade_id',
                     'created_at',
                     'updated_at',
-                    'deleted_at',
+                    'deleted_at'
             ]]);
     }
 
     public function testShouldReturnCreatedDoctor(): void
     {
         // Arrange
-        $fakeDoctor = Doctor::factory()->make();
-        $body = [
-            $fakeDoctor
-        ];
+        $fakeDoctor = end($this->fakeDoctors);
+        $body = $fakeDoctor;
 
         // Act
-        $response = $this->post('api/cidades', $body);
+        $response = $this->withHeader('Authorization', 'Bearer' . $this->userToken)
+            ->post('api/medicos', $body);
 
         // Assert
-        $response->assertStatus(200)
-            ->assertJsonStructure([[
+        $response->assertStatus(201)
+            ->assertJsonStructure([
                     'id',
                     'nome',
                     'especialidade',
                     'cidade_id',
                     'created_at',
                     'updated_at',
-                    'deleted_at',
-            ]]);
+            ]);
     }
 
     public function testShouldReturnLinkedDoctorPatient(): void
@@ -90,11 +111,12 @@ class DoctorControllerTest extends TestCase
         $patientId = rand(1, 5);
         $body = [
             'medico_id' => $doctorId,
-            'paciente_id' => $$patientId
+            'paciente_id' => $patientId
         ];
 
         // Act
-        $response = $this->post('api/medicos' . $doctorId . '/pacientes', $body);
+        $response = $this->withHeader('Authorization', 'Bearer' . $this->userToken)
+            ->post('api/medicos/' . $doctorId . '/pacientes', $body);
 
         // Assert
         $response->assertStatus(200)
@@ -106,7 +128,7 @@ class DoctorControllerTest extends TestCase
                     'cidade_id',
                     'created_at',
                     'updated_at',
-                    'deleted_at',
+                    'deleted_at'
                 ],
                 'paciente' => [
                     'id',
@@ -115,7 +137,7 @@ class DoctorControllerTest extends TestCase
                     'celular',
                     'created_at',
                     'updated_at',
-                    'deleted_at',
+                    'deleted_at'
                 ]
             ]);
     }

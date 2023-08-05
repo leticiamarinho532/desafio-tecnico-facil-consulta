@@ -15,7 +15,7 @@ class PatientService
     ) {
     }
 
-    public function getAllDoctorPatients(int $doctorId): bool|object
+    public function getAllDoctorPatients(int $doctorId): array|object
     {
         try { 
             $result = $this->patientRepository->getAllDoctorPatients($doctorId);

@@ -2,7 +2,6 @@
 
 namespace Tests\Unit;
 
-use App\Models\City;
 use App\Services\CityService;
 use App\Repositories\Interfaces\CityRepositoryInterface;
 use Tests\TestCase;
